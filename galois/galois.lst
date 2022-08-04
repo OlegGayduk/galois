@@ -1,0 +1,87 @@
+Microsoft (R) Macro Assembler Version 14.28.29336.0	    02/19/21 13:52:42
+lfs							     Page 1 - 1
+
+
+				Title lfsr
+				.686; Тип микропроцессора
+				.MODEL FLAT, C ; Модель памяти -Win32 (начиная с i386) и язык программирования
+				.STACK 256; Сегмент стека и его размер
+ 00000000			.DATA; Сегментданных
+ 00000000			.CODE; Сегмент кода программы
+				;-----------External usage-------------------------
+				; Возвращаемое значение процедуры во внешнее приложение
+				EXTRN res : DWORD
+				EXTRN s : DWORD
+
+				;-----------Function definitions-------------------
+				; Описание экспортируемой функции
+				PUBLIC C galois ;
+ 00000000			galois PROC far; Заголовок экспортируемой функции
+				;far -возможность обращения к процедуре из другого участка кода проекта
+ 00000000  A1 00000000 E	mov eax, res
+ 00000005  83 E0 01		and eax, 1
+ 00000008  74 22		jz next
+ 0000000A  A1 00000000 E	mov eax, res
+ 0000000F  35 EA000001		xor eax, 3925868545; oea000001h
+ 00000014  D1 E8		shr eax, 1
+ 00000016  0D 80000000		or eax, 2147483648; 80000000h
+ 0000001B  A3 00000000 E	mov res, eax
+ 00000020  C7 05 00000000 E	mov s, 1
+	   00000001
+ 0000002A  EB 16		jmp exit
+
+ 0000002C			next:
+ 0000002C  A1 00000000 E	mov eax, res
+ 00000031  D1 E8		shr eax, 1
+ 00000033  A3 00000000 E	mov res, eax
+ 00000038  C7 05 00000000 E	mov s,0
+	   00000000
+				; Оператор Return from procedure обеспечивает возврат управления вызывающей программе
+
+ 00000042			exit:
+ 00000042  C3			retn 
+ 00000043			galois ENDP
+				END
+Microsoft (R) Macro Assembler Version 14.28.29336.0	    02/19/21 13:52:42
+lfs							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00000100 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000043 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+galois . . . . . . . . . . . . .	P Far	 00000000 _TEXT	Length= 00000043 Public C
+  next . . . . . . . . . . . . .	L Near	 0000002C _TEXT	
+  exit . . . . . . . . . . . . .	L Near	 00000042 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000001h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+res  . . . . . . . . . . . . . .	DWord	 00000000 FLAT	External C
+s  . . . . . . . . . . . . . . .	DWord	 00000000 FLAT	External C
+
+	   0 Warnings
+	   0 Errors
